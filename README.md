@@ -4,5 +4,5 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a Flutter application for personal expenses.
+This project is a Flutter application to manage personal finances.
 
