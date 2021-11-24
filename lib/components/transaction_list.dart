@@ -13,7 +13,16 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: ListView.builder(
+      child: transactions.isEmpty 
+      ? Column(
+        children: [
+          Text(
+            'Nenhuma Transação Cadastrada',
+            style: GoogleFonts.play(),
+          )
+        ],
+      )
+      : ListView.builder(
         itemCount: transactions.length,
         itemBuilder: (ctx, index) {
           final tr = transactions[index];
@@ -27,14 +36,14 @@ class TransactionList extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.purple,
+                          color: Theme.of(context).accentColor,
                           width: 2,
                         ) 
                       ),
                       padding: const EdgeInsets.all(10),
                       child: Text(
                         'R\$ ${tr.value.toStringAsFixed(2)}',
-                        style: const TextStyle(
+                        style: GoogleFonts.play(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                         ),

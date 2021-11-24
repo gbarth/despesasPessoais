@@ -18,6 +18,10 @@ class ExpensesApp extends StatelessWidget {
     return MaterialApp(
       title: 'Despesas Pessoais',
       home:MyHomePage(),
+      theme: ThemeData(
+        primaryColor: Colors.purple[900],
+        accentColor: Colors.purple[800],   
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -31,8 +35,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  final _transactions = [
-    Transaction (
+  final List<Transaction> _transactions = [
+    /*Transaction (
       id: 't1',
       title: 'Tênis de corrida',
       value: 299.90,
@@ -43,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
       title: 'Conta de Luz',
       value: 176.70,
       date: DateTime.now(),
-    )
+    )*/
   ];
 
   _addTransaction(String title, double value){
@@ -57,6 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _transactions.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
   }
 
   _openTransactionFormModal(BuildContext context){
@@ -77,10 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
             fontWeight: FontWeight.bold
           )
           ),
-        backgroundColor: Colors.purple,
+        backgroundColor: Theme.of(context).primaryColor,
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () => _openTransactionFormModal(context),
           )
         ],
@@ -90,9 +96,9 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
-              child: const Card(
-                 color: Colors.purple,
-                 child: Text('Gráfico'),
+              child: Card(
+                 color: Theme.of(context).accentColor,
+                 child: const Text('Gráfico'),
                  elevation: 5,
                ),
             ),
@@ -101,9 +107,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () => _openTransactionFormModal(context),
-        backgroundColor: Colors.purple,
+        backgroundColor: Theme.of(context).accentColor,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
