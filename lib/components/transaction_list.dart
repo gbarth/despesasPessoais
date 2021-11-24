@@ -15,11 +15,23 @@ class TransactionList extends StatelessWidget {
       height: 300,
       child: transactions.isEmpty 
       ? Column(
-        children: [
+        children: <Widget> [
+          const SizedBox(height: 20),
           Text(
-            'Nenhuma Transação Cadastrada',
-            style: GoogleFonts.play(),
-          )
+            'NENHUMA TRANSAÇÃO CADASTRADA',
+            style: GoogleFonts.play(
+              fontSize: 14,
+              fontWeight: FontWeight.bold
+            ),
+          ),
+          const SizedBox(height: 30),
+          Container(
+            height: 200,
+            child: Image.asset(
+              'assets/images/waiting.png',
+              fit: BoxFit.cover,
+            ),
+          ),
         ],
       )
       : ListView.builder(
