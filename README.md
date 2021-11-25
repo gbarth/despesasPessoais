@@ -2,7 +2,7 @@
 
 A new Flutter project.
 
-## Getting Started
+## Finished Project
 
 This project is a Flutter application to manage personal finances.
 
