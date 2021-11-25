@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TransactionForm extends StatefulWidget {
-  final void Function(String, double) onSubmit;
+  final void Function(String, double, DateTime) onSubmit;
 
   TransactionForm(this.onSubmit);
 
@@ -14,34 +14,34 @@ class TransactionForm extends StatefulWidget {
 class _TransactionFormState extends State<TransactionForm> {
   final _titleController = TextEditingController();
   final _valueController = TextEditingController();
-  var _selectedDate;
+  DateTime _selectedDate = DateTime.now();
 
   _submitForm() {
     final title = _titleController.text;
     final value = double.tryParse(_valueController.text) ?? 0.0;
 
-    if (title.isEmpty || value <= 0) {
+    if (title.isEmpty || value <= 0 || _selectedDate == null) {
       return;
     }
 
-    widget.onSubmit(title, value);
+    widget.onSubmit(title, value, _selectedDate);
   }
 
   _showDatePicker() {
     showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2020),
-        lastDate: DateTime.now(),
-  ).then((pickedDate){
-    if(pickedDate == null) {
-      return;
-    }
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
 
-    setState(() {
-     _selectedDate = pickedDate;
-    });   
-   });
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    });
   }
 
   @override
@@ -68,11 +68,9 @@ class _TransactionFormState extends State<TransactionForm> {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: Text(
-                      _selectedDate == null 
+                    child: Text(_selectedDate == null
                         ? 'Nenhuma data selecionada!'
-                        : DateFormat('d/MM/y').format(_selectedDate)
-                      ),
+                        : DateFormat('d/MM/y').format(_selectedDate)),
                   ),
                   TextButton(
                     onPressed: _showDatePicker,

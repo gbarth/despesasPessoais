@@ -20,6 +20,7 @@ class ExpensesApp extends StatelessWidget {
       title: 'Despesas Pessoais',
       home: MyHomePage(),
       theme: ThemeData(
+        colorScheme: ColorScheme.light(primary: Colors.purple),
         primaryColor: Colors.purple[900],
         accentColor: Colors.purple[800],
       ),
@@ -34,20 +35,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Tênis de corrida',
-      value: 299.90,
-      date: DateTime.now().subtract(const Duration(days: 4)),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de Luz',
-      value: 176.70,
-      date: DateTime.now().subtract(const Duration(days: 3)),
-    )
-  ];
+  final List<Transaction> _transactions = [];
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
@@ -55,18 +43,26 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  _addTransaction(String title, double value) {
+  _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
         id: Random().nextDouble().toString(),
         title: title,
         value: value,
-        date: DateTime.now());
+        date: date);
 
     setState(() {
       _transactions.add(newTransaction);
     });
 
     Navigator.of(context).pop();
+  }
+
+  _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tr) {
+        return tr.id == id;
+      });
+    });
   }
 
   _openTransactionFormModal(BuildContext context) {
@@ -96,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactionList(_transactions),
+            TransactionList(_transactions, _deleteTransaction),
           ],
         ),
       ),

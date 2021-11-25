@@ -5,12 +5,14 @@ import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
-  TransactionList(this.transactions);
+  final void Function(String) onRemove;
+
+  TransactionList(this.transactions, this.onRemove);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 400,
       child: transactions.isEmpty
           ? Column(
               children: <Widget>[
@@ -36,7 +38,8 @@ class TransactionList extends StatelessWidget {
                 final tr = transactions[index];
                 return Card(
                   elevation: 5,
-                  margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                   child: ListTile(
                     leading: CircleAvatar(
                       backgroundColor: Theme.of(context).accentColor,
@@ -47,10 +50,9 @@ class TransactionList extends StatelessWidget {
                           child: Text(
                             'R\$${tr.value}',
                             style: GoogleFonts.play(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14
-                            ),
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12),
                           ),
                         ),
                       ),
@@ -64,9 +66,12 @@ class TransactionList extends StatelessWidget {
                     ),
                     subtitle: Text(
                       DateFormat('d MMM y').format(tr.date),
-                      style: GoogleFonts.play(
-                        fontWeight: FontWeight.bold
-                      ),
+                      style: GoogleFonts.play(fontWeight: FontWeight.bold),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Colors.purple[400],
+                      onPressed: () => onRemove(tr.id),
                     ),
                   ),
                 );
