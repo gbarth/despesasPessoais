@@ -35,46 +35,39 @@ class TransactionList extends StatelessWidget {
               itemBuilder: (ctx, index) {
                 final tr = transactions[index];
                 return Card(
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                          color: Theme.of(context).accentColor,
-                          width: 2,
-                        )),
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          'R\$ ${tr.value.toStringAsFixed(2)}',
-                          style: GoogleFonts.play(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                  elevation: 5,
+                  margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Theme.of(context).accentColor,
+                      radius: 40,
+                      child: Padding(
+                        padding: EdgeInsets.all(6.0),
+                        child: FittedBox(
+                          child: Text(
+                            'R\$${tr.value}',
+                            style: GoogleFonts.play(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14
+                            ),
                           ),
                         ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            tr.title,
-                            style: GoogleFonts.play(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                            ),
-                          ),
-                          Text(
-                            DateFormat('d MMM y').format(tr.date),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey[700],
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+                    ),
+                    title: Text(
+                      tr.title,
+                      style: GoogleFonts.play(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    subtitle: Text(
+                      DateFormat('d MMM y').format(tr.date),
+                      style: GoogleFonts.play(
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
                   ),
                 );
               },
